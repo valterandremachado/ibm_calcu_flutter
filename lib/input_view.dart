@@ -14,8 +14,56 @@ class _MainViewState extends State<InputView> {
       appBar: AppBar(
         title: Text('BMI Calculator'),
       ),
-      body: Center(
-        child: Text('This is the body'),
+      body: SafeArea(
+        child: Column(
+          children: [
+            Expanded(
+              child: Row(
+                children: [
+                  Expanded(
+                    child: ReusableCard(Colors.red),
+                  ),
+                  Expanded(
+                    child: ReusableCard(Colors.red),
+                  )
+                ],
+              ),
+            ),
+            Expanded(
+              child: ReusableCard(Colors.black),
+            ),
+            Expanded(
+              child: Row(
+                children: [
+                  Expanded(
+                    child: ReusableCard(Colors.red),
+                  ),
+                  Expanded(
+                    child: ReusableCard(Colors.red),
+                  )
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// ReusableCard Widget
+class ReusableCard extends StatelessWidget {
+  final Color cardColor;
+  ReusableCard(this.cardColor);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.all(15),
+      height: 200,
+      decoration: BoxDecoration(
+        color: cardColor,
+        borderRadius: BorderRadius.circular(14),
       ),
     );
   }
