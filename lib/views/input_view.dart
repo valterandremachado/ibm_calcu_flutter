@@ -1,9 +1,12 @@
+import 'package:bmi_calculator/bmi_calculator.dart';
+import 'package:bmi_calculator/components/custom_round_btn.dart';
+import 'package:bmi_calculator/views/results_view.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:bmi_calculator/reusable_card_widget.dart';
-import 'constants.dart';
-import 'custom_round_btn.dart';
-import 'gender_icon_content_widget.dart';
+import '../utils/constants.dart';
+import 'package:bmi_calculator/components/gender_icon_content_widget.dart';
+import 'package:bmi_calculator/components/bottom_button.dart';
+import 'package:bmi_calculator/components/reusable_card_widget.dart';
 
 enum Gender { male, female }
 
@@ -19,7 +22,7 @@ class _MainViewState extends State<InputView> {
   int userHeight = 190;
   int userWeight = 40;
   int userAge = 1;
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -212,22 +215,21 @@ class _MainViewState extends State<InputView> {
                 ],
               ),
             ),
-            Container(
-              width: double.infinity,
-              margin: EdgeInsets.only(left: 15, right: 15, top: 15),
-              height: kBottomContainerHeight,
-              decoration: BoxDecoration(
-                  color: kBottomContainerColor,
-                  borderRadius: BorderRadius.circular(10),
-              ),
-            ),
+            BottomButton('Calculate BMI', onTap: () {
+              BMICalculator calc = BMICalculator(userHeight, userWeight);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => ResultsView(
+                          calc.calculateBMI(),
+                          calc.getResult(),
+                          calc.getInterpretation(),
+                        )),
+              );
+            }),
           ],
         ),
       ),
     );
   }
 }
-
-
-
-

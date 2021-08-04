@@ -1,6 +1,6 @@
 // Reusable GenderIconContent Widget
 import 'package:flutter/material.dart';
-import 'constants.dart';
+import '../utils/constants.dart';
 
 class GenderIconContent extends StatelessWidget {
   final String title;
