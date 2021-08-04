@@ -1,14 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
 import 'package:bmi_calculator/reusable_card_widget.dart';
+import 'constants.dart';
 import 'gender_icon_content_widget.dart';
-
-// Initiate constants here
-const double bottomContainerHeight = 80.0;
-const Color bottomContainerColor = Colors.purple;
-const Color selectedCardColor = Color(0xFF006064);
-const Color unselectedCardColor = Color(0xFF00ACC1);
 
 enum Gender { male, female }
 
@@ -21,7 +15,8 @@ class InputView extends StatefulWidget {
 
 class _MainViewState extends State<InputView> {
   Gender? selectedGender;
- 
+  int userHeight = 190;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,38 +30,34 @@ class _MainViewState extends State<InputView> {
               child: Row(
                 children: [
                   Expanded(
-                    child: GestureDetector(
-                      onTap: () {
+                    child: ReusableCard(
+                      cardOnTap: () {
                         setState(() {
                           selectedGender = Gender.male;
                         });
                       },
-                      child: ReusableCard(
-                        cardColor: selectedGender == Gender.male
-                            ? selectedCardColor
-                            : unselectedCardColor,
-                        cardChild: GenderIconContent(
-                          'MALE',
-                          genderIcon: FontAwesomeIcons.mars,
-                        ),
+                      cardColor: selectedGender == Gender.male
+                          ? kSelectedCardColor
+                          : kUnselectedCardColor,
+                      cardChild: GenderIconContent(
+                        'MALE',
+                        genderIcon: FontAwesomeIcons.mars,
                       ),
                     ),
                   ),
                   Expanded(
-                    child: GestureDetector(
-                      onTap: () {
+                    child: ReusableCard(
+                      cardOnTap: () {
                         setState(() {
                           selectedGender = Gender.female;
                         });
                       },
-                      child: ReusableCard(
-                        cardColor: selectedGender == Gender.female
-                            ? selectedCardColor
-                            : unselectedCardColor,
-                        cardChild: GenderIconContent(
-                          'FAMALE',
-                          genderIcon: FontAwesomeIcons.venus,
-                        ),
+                      cardColor: selectedGender == Gender.female
+                          ? kSelectedCardColor
+                          : kUnselectedCardColor,
+                      cardChild: GenderIconContent(
+                        'FAMALE',
+                        genderIcon: FontAwesomeIcons.venus,
                       ),
                     ),
                   )
@@ -75,8 +66,53 @@ class _MainViewState extends State<InputView> {
             ),
             Expanded(
               child: ReusableCard(
-                cardColor: selectedCardColor,
-                cardChild: null,
+                cardColor: kSelectedCardColor,
+                cardChild: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'HEIGHT',
+                      style: kLabelStyle,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.baseline,
+                      textBaseline: TextBaseline.alphabetic,
+                      children: [
+                        Text(
+                          userHeight.toString(),
+                          style: kCardNumberStyle,
+                        ),
+                        Text(
+                          'cm',
+                          style: kLabelStyle,
+                        ),
+                      ],
+                    ),
+                    SliderTheme(
+                      data: SliderTheme.of(context).copyWith(
+                        thumbShape:
+                            RoundSliderThumbShape(enabledThumbRadius: 12),
+                        overlayShape:
+                            RoundSliderOverlayShape(overlayRadius: 24),
+                        thumbColor: Colors.purple,
+                        activeTrackColor: Colors.white,
+                        inactiveTickMarkColor: Colors.cyan[500],
+                        overlayColor: Colors.purple.withAlpha(60),
+                      ),
+                      child: Slider(
+                        onChanged: (double newValue) {
+                          setState(() {
+                            userHeight = newValue.round();
+                          });
+                        },
+                        value: userHeight.toDouble(),
+                        min: 120,
+                        max: 220,
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
             Expanded(
@@ -84,13 +120,13 @@ class _MainViewState extends State<InputView> {
                 children: [
                   Expanded(
                     child: ReusableCard(
-                      cardColor: selectedCardColor,
+                      cardColor: kSelectedCardColor,
                       cardChild: null,
                     ),
                   ),
                   Expanded(
                     child: ReusableCard(
-                      cardColor: selectedCardColor,
+                      cardColor: kSelectedCardColor,
                       cardChild: null,
                     ),
                   )
@@ -100,9 +136,9 @@ class _MainViewState extends State<InputView> {
             Container(
               width: double.infinity,
               margin: EdgeInsets.only(left: 15, right: 15, top: 15),
-              height: bottomContainerHeight,
+              height: kBottomContainerHeight,
               decoration: BoxDecoration(
-                  color: bottomContainerColor,
+                  color: kBottomContainerColor,
                   borderRadius: BorderRadius.circular(10)),
             ),
           ],

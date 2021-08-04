@@ -1,10 +1,6 @@
 // Reusable GenderIconContent Widget
 import 'package:flutter/material.dart';
-
-// const labelStyle = TextStyle(
-//   fontSize: 20,
-//   color: Colors.grey.shade300,
-// );
+import 'constants.dart';
 
 class GenderIconContent extends StatelessWidget {
   final String title;
@@ -26,10 +22,7 @@ class GenderIconContent extends StatelessWidget {
         ),
         Text(
           title,
-          style: TextStyle(
-            fontSize: 20,
-            color: Colors.grey[300],
-          ),
+          style: kLabelStyle,
         )
       ],
     );
