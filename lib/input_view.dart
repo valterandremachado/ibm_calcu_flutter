@@ -6,8 +6,11 @@ import 'gender_icon_content_widget.dart';
 
 // Initiate constants here
 const double bottomContainerHeight = 80.0;
-const Color defaultCardColor = Color(0xFF006064);
 const Color bottomContainerColor = Colors.purple;
+const Color selectedCardColor = Color(0xFF006064);
+const Color unselectedCardColor = Color(0xFF00ACC1);
+
+enum Gender { male, female }
 
 class InputView extends StatefulWidget {
   const InputView({Key? key}) : super(key: key);
@@ -17,6 +20,8 @@ class InputView extends StatefulWidget {
 }
 
 class _MainViewState extends State<InputView> {
+  Gender? selectedGender;
+ 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,20 +35,38 @@ class _MainViewState extends State<InputView> {
               child: Row(
                 children: [
                   Expanded(
-                    child: ReusableCard(
-                      cardColor: defaultCardColor,
-                      cardChild: GenderIconContent(
-                        'MALE',
-                        genderIcon: FontAwesomeIcons.mars,
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          selectedGender = Gender.male;
+                        });
+                      },
+                      child: ReusableCard(
+                        cardColor: selectedGender == Gender.male
+                            ? selectedCardColor
+                            : unselectedCardColor,
+                        cardChild: GenderIconContent(
+                          'MALE',
+                          genderIcon: FontAwesomeIcons.mars,
+                        ),
                       ),
                     ),
                   ),
                   Expanded(
-                    child: ReusableCard(
-                      cardColor: defaultCardColor,
-                      cardChild: GenderIconContent(
-                        'FAMALE',
-                        genderIcon: FontAwesomeIcons.venus,
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          selectedGender = Gender.female;
+                        });
+                      },
+                      child: ReusableCard(
+                        cardColor: selectedGender == Gender.female
+                            ? selectedCardColor
+                            : unselectedCardColor,
+                        cardChild: GenderIconContent(
+                          'FAMALE',
+                          genderIcon: FontAwesomeIcons.venus,
+                        ),
                       ),
                     ),
                   )
@@ -52,7 +75,7 @@ class _MainViewState extends State<InputView> {
             ),
             Expanded(
               child: ReusableCard(
-                cardColor: defaultCardColor,
+                cardColor: selectedCardColor,
                 cardChild: null,
               ),
             ),
@@ -61,13 +84,13 @@ class _MainViewState extends State<InputView> {
                 children: [
                   Expanded(
                     child: ReusableCard(
-                      cardColor: defaultCardColor,
+                      cardColor: selectedCardColor,
                       cardChild: null,
                     ),
                   ),
                   Expanded(
                     child: ReusableCard(
-                      cardColor: defaultCardColor,
+                      cardColor: selectedCardColor,
                       cardChild: null,
                     ),
                   )
