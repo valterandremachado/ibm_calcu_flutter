@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:bmi_calculator/reusable_card_widget.dart';
 import 'constants.dart';
+import 'custom_round_btn.dart';
 import 'gender_icon_content_widget.dart';
 
 enum Gender { male, female }
@@ -16,7 +17,9 @@ class InputView extends StatefulWidget {
 class _MainViewState extends State<InputView> {
   Gender? selectedGender;
   int userHeight = 190;
-
+  int userWeight = 40;
+  int userAge = 1;
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -121,13 +124,89 @@ class _MainViewState extends State<InputView> {
                   Expanded(
                     child: ReusableCard(
                       cardColor: kSelectedCardColor,
-                      cardChild: null,
+                      cardChild: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'WEIGHT',
+                            style: kLabelStyle,
+                          ),
+                          Text(
+                            userWeight.toString(),
+                            style: kCardNumberStyle,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              RoundIconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    if (userWeight > 3) {
+                                      userWeight--;
+                                    }
+                                  });
+                                },
+                                icon: FontAwesomeIcons.minus,
+                              ),
+                              SizedBox(
+                                width: 15,
+                              ),
+                              RoundIconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    userWeight++;
+                                  });
+                                },
+                                icon: FontAwesomeIcons.plus,
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
                     ),
                   ),
                   Expanded(
                     child: ReusableCard(
                       cardColor: kSelectedCardColor,
-                      cardChild: null,
+                      cardChild: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'AGE',
+                            style: kLabelStyle,
+                          ),
+                          Text(
+                            userAge.toString(),
+                            style: kCardNumberStyle,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              RoundIconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    if (userAge > 1) {
+                                      userAge--;
+                                    }
+                                  });
+                                },
+                                icon: FontAwesomeIcons.minus,
+                              ),
+                              SizedBox(
+                                width: 15,
+                              ),
+                              RoundIconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    userAge++;
+                                  });
+                                },
+                                icon: FontAwesomeIcons.plus,
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
                     ),
                   )
                 ],
@@ -139,7 +218,8 @@ class _MainViewState extends State<InputView> {
               height: kBottomContainerHeight,
               decoration: BoxDecoration(
                   color: kBottomContainerColor,
-                  borderRadius: BorderRadius.circular(10)),
+                  borderRadius: BorderRadius.circular(10),
+              ),
             ),
           ],
         ),
